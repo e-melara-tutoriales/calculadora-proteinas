@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { MenuItem, MenuItemId, OrderItem } from "../types";
 
 export default function useOrder() {
+  const [propina, setPropina] = useState<number>(0);
   const [orden, setOrden] = useState<OrderItem[]>([]);
 
   const addItem = (item: MenuItem) => {
@@ -20,14 +21,22 @@ export default function useOrder() {
     let copyOrden = [...orden];
     copyOrden = copyOrden.filter((orderItem) => orderItem.id !== id);
     setOrden(copyOrden);
-  }
+  };
+
+  const placerOrden = () => {
+    setPropina(0);
+    setOrden([]);
+  };
 
   return {
     // state
     orden,
-    
+    propina,
+    setPropina,
+
     // functions
     addItem,
     removeItem,
+    placerOrden,
   };
 }

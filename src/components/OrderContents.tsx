@@ -1,14 +1,26 @@
+import { Dispatch, SetStateAction } from "react";
+
 import type { OrderItem, MenuItemId } from "../types";
 import { formatCurrency, formatTotal } from "../helpers";
 
 import OrderTotal from "./OrderTotal";
 
 type OrderContentsProps = {
+  propina: number;
   ordens: OrderItem[];
+
+  placerOrden: () => void;
   removeItem: (id: MenuItemId) => void;
+  setPropina: Dispatch<SetStateAction<number>>;
 };
 
-export function OrderContents({ ordens, removeItem }: OrderContentsProps) {
+export function OrderContents({
+  ordens,
+  removeItem,
+  propina,
+  setPropina,
+  placerOrden,
+}: OrderContentsProps) {
   return (
     <div className="px-10 mx-2">
       <h2 className="font-black text-4xl">Consumo</h2>
@@ -17,7 +29,10 @@ export function OrderContents({ ordens, removeItem }: OrderContentsProps) {
           <p className="text-center">La orden esta vacia</p>
         ) : (
           ordens.map((orden) => (
-            <div key={orden.id} className="flex justify-between items-center p-3 border-t">
+            <div
+              key={orden.id}
+              className="flex justify-between items-center p-3 border-t"
+            >
               <div>
                 <p className="text-lg">
                   {orden.name} - {formatCurrency(orden.price)}
@@ -27,13 +42,21 @@ export function OrderContents({ ordens, removeItem }: OrderContentsProps) {
                   {formatTotal(orden.price, orden.quantity)}
                 </p>
               </div>
-              <button 
+              <button
                 onClick={() => removeItem(orden.id)}
-                className="bg-red-600 h-8 w-8 rounded-full text-white">x</button>
+                className="bg-red-600 h-8 w-8 rounded-full text-white"
+              >
+                x
+              </button>
             </div>
           ))
         )}
-        <OrderTotal orders={ordens} />
+        <OrderTotal
+          orders={ordens}
+          setPropina={setPropina}
+          propina={propina}
+          placerOrden={placerOrden}
+        />
       </div>
     </div>
   );
