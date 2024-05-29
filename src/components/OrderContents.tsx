@@ -1,11 +1,14 @@
+import type { OrderItem, MenuItemId } from "../types";
 import { formatCurrency, formatTotal } from "../helpers";
-import type { OrderItem } from "../types";
+
+import OrderTotal from "./OrderTotal";
 
 type OrderContentsProps = {
   ordens: OrderItem[];
+  removeItem: (id: MenuItemId) => void;
 };
 
-export function OrderContents({ ordens }: OrderContentsProps) {
+export function OrderContents({ ordens, removeItem }: OrderContentsProps) {
   return (
     <div className="px-10 mx-2">
       <h2 className="font-black text-4xl">Consumo</h2>
@@ -24,10 +27,13 @@ export function OrderContents({ ordens }: OrderContentsProps) {
                   {formatTotal(orden.price, orden.quantity)}
                 </p>
               </div>
-              <button className="bg-red-600 h-8 w-8 rounded-full text-white">x</button>
+              <button 
+                onClick={() => removeItem(orden.id)}
+                className="bg-red-600 h-8 w-8 rounded-full text-white">x</button>
             </div>
           ))
         )}
+        <OrderTotal orders={ordens} />
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import Header from "./components/Header";
+import useOrder from "./hooks/useOrder";
 import MenuItems from "./components/MenuItems";
 import { OrderContents } from "./components/OrderContents";
-import useOrder from "./hooks/useOrder";
 
 function App() {
-  const { orden ,addItem } =  useOrder();
+  const { orden, addItem, removeItem } =  useOrder();
 
   return (
     <>
@@ -14,7 +14,7 @@ function App() {
           <h2 className="text-4xl font-black">Menu</h2>
           <MenuItems addItem={addItem}  />
         </div>
-        <OrderContents ordens={orden} />
+        <OrderContents ordens={orden} removeItem={removeItem} />
       </main>
     </>
   );

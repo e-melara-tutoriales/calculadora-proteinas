@@ -4,6 +4,8 @@ export type MenuItem = {
   price: number;
 }
 
+export type MenuItemId = MenuItem["id"];
+
 export type OrderItem = MenuItem & {
   quantity: number;
 }
